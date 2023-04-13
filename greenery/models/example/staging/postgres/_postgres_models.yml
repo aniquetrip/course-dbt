@@ -1,0 +1,24 @@
+
+version: 2
+
+models:
+  - name: stg_addresses
+    description: "Addresses of users"
+
+  - name: stg_events
+    description: "Different type of events"
+  
+  - name: stg_order_items
+    description: "Items that belong to an order"
+
+  - name: stg_orders
+    description: "Order placed by users"
+
+  - name: stg_products
+    description: "Products inventory overview"
+
+  - name: stg_promos
+    description: "Sale promotions with the discount amount"
+
+  - name: stg_users
+    description: "Users and their contact details"

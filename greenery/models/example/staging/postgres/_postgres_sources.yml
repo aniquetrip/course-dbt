@@ -1,0 +1,22 @@
+
+version: 2
+
+sources:
+  - name: postgres
+    database: raw
+    schema: public
+    tables:
+      - name: addresses
+        description: "Addresses of users"
+      - name: events
+        description: "Consits of different type of events"
+      - name: orders
+        description: "Order placed by users"
+      - name: order_items
+        description: "Items that belong to an order"
+      - name: products
+        description: "Products inventory overview"
+      - name: promos
+        description: "Different sale promotions with the discount amount"
+      - name: users
+        description: "Users and their contact details"
