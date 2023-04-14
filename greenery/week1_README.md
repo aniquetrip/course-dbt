@@ -4,8 +4,10 @@ Part 4
 ## How many users do we have? 
 130 users
 
+```
 SELECT COUNT(DISTINCT user_id) AS distinct_users
 FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_USERS
+```
 
 ## On average, how many orders do we receive per hour?
 8 orders per hour (7.52)
