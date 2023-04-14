@@ -59,3 +59,15 @@ GROUP BY 1
 ORDER BY 1
 
 ## On average, how many unique sessions do we have per hour?
+16 (16.33)
+
+WITH sessions_per_hour AS (
+SELECT 
+    DATE_TRUNC(HOUR,created_at) AS created_hour
+    , COUNT(DISTINCT session_id) AS count_unique_sessions
+FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_EVENTS
+GROUP BY 1
+)
+
+SELECT ROUND(AVG(count_unique_sessions),2) AS avg_unique_sessions
+FROM sessions_per_hour
