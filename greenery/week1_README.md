@@ -38,15 +38,16 @@ WHERE delivered_at IS NOT NULL
 
 ## How many users have only made one purchase? Two purchases? Three+ purchases?
 
-NUMBER_OF_ORDERS	NUMBER_OF_USERS
-1               	25
-2	                28
-3	                34
-4	                20
-5	                10
-6	                 2
-7	                 4
-8	                 1
+| NUMBER_OF_ORDERS | NUMBER_OF_USERS
+| --- | ---|
+| 1 | 25
+| 2	| 28
+| 3	| 34
+| 4	| 20
+| 5	| 10
+| 6	| 2
+| 7	| 4
+| 8	| 1
 
 ```
 WITH orders_per_user AS (
