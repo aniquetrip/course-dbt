@@ -22,12 +22,16 @@ LEFT JOIN repeat_users
 ## What are good indicators of a user who will likely purchase again? What about indicators of users who are likely NOT to purchase again? If you had more data, what features would you want to look into to answer this question?
 Indicators of users who are likely to purchase again:
 -Time between consecutive orders
+
 -Time since last order
+
 -Number of times ordered
+
 -Discount amount
 
 Indicators of users who are NOT likely to purchase again:
 -Late delivery (time delivered > estimated delivery time)
+
 -Shipping costs
 
 Additional features
