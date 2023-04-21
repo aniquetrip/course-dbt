@@ -1,0 +1,31 @@
+version: 2
+
+models:
+
+  - name: fact_products
+    description: 'Mart with statistics like page views, orders and conversion rate per product'
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique 
+      - name: total_page_views
+        tests:
+          - postive_values
+      - name: total_add_to_carts
+        tests:
+          - postive_values
+      - name: total_orders
+        tests:
+          - postive_values
+
+  - name: fact_promos
+    description: 'Mart showing which promos were given for different orders and products'
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: product_id
+        tests:
+          - not_null
+    

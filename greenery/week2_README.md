@@ -21,19 +21,32 @@ LEFT JOIN repeat_users
 
 ## What are good indicators of a user who will likely purchase again? What about indicators of users who are likely NOT to purchase again? If you had more data, what features would you want to look into to answer this question?
 Indicators of users who are likely to purchase again:
--Time between consecutive orders
-
--Time since last order
-
--Number of times ordered
-
--Discount amount
+*Time between consecutive orders
+*Time since last order
+*Number of times ordered
+*Discount amount
 
 Indicators of users who are NOT likely to purchase again:
--Late delivery (time delivered > estimated delivery time)
-
--Shipping costs
+*Late delivery (time delivered > estimated delivery time)
+*Shipping costs
+*Products out of stock
 
 Additional features
--Number of times order returned
+*Number of times order returned
+*Customer feedback
 
+## Explain the product mart models you added. Why did you organize the models in the way you did?
+Product mart models
+* FACT_PROMOS - This mart model is built to show what promos (incl discount amounts) have been given to certain orders and products. I didnt aggregate this yet, but joined the data in such a way that you can identify which promos were given (not possible from source table cause product_id and order_id are not linked) and which gives the flexibility to analyse promos on both order and product level. 
+* FACT_PRODUCT - This mart model is built to show daily stats per product. For example the daily page views, daily total orders and conversion rate of page views into orders. I added this on product level so the product team can analyse the performance per product.
+
+Part 2. Tests
+## Explain the product mart models you added. Why did you organize the models in the way you did?
+I've added the following tests to some of the columns in either staging or mart models. Also positive values tests.
+Staging models
+*uniqueness
+*not null
+
+Marts models
+*uniqueness
+*not null

@@ -1,4 +1,4 @@
--- mart model to identify which promos have been given to specific orders and products
+-- mart model to identify daily statistics per product
 
 {{ 
     config(
@@ -34,7 +34,7 @@ combined.product_id
 , SUM(total_page_views) AS total_page_views
 , SUM(total_add_to_carts) AS total_add_to_carts
 , SUM(total_orders) AS total_orders
-, ROUND(SUM(total_orders) / SUM(total_page_views),2) AS conversion_rate
+, ROUND(SUM(total_orders) / SUM(total_page_views),2) AS conversion_rate --this is the conversion rate of page views into orders
 FROM combined
 LEFT JOIN DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_PRODUCTS AS products
 ON combined.product_id = products.product_id

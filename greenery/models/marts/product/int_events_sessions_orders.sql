@@ -10,7 +10,7 @@ WITH events AS (
     SELECT * FROM {{ ref('stg_events') }}
 )
 
---need to determine only for checkout (not looking at order_id) otherwise we might duplicate orders when the sam order is checked out on one day and shipped on another day 
+--need to determine only for checkout (not looking at order_id) otherwise we might duplicate orders when the same order is checked out on one day and shipped on another day 
 SELECT 
     session_id
     , DATE(created_at) AS created_day
