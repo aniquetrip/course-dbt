@@ -1,0 +1,11 @@
+version: 2
+
+models:
+
+  - name: int_events_products_orders
+
+  - name: int_events_sessions_orders
+
+  - name: int_events_sessions_products
+
+    

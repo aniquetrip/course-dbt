@@ -32,5 +32,5 @@ ON events_products_orders.order_id = orders.order_id
 LEFT JOIN promos
     ON orders.promo_id = promos.promo_id
 LEFT JOIN products
-    ON intermediate.product_id = products.product_id
+    ON events_products_orders.product_id = products.product_id
 WHERE event_type = 'add_to_cart'

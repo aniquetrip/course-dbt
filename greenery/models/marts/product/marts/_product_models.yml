@@ -1,0 +1,10 @@
+version: 2
+
+models:
+
+  - name: fact_products
+    description: 'Mart with orders and page views per product'
+
+  - name: fact_promos
+    description: 'Mart showing which promos were given for different orders and products'
+    
