@@ -43,6 +43,7 @@ Additional features
 See Products marts folder [here](https://github.com/aniquetrip/course-dbt/tree/main/greenery/models/marts/product)
 
 **Explain the product mart models you added. Why did you organize the models in the way you did?**
+
 Product mart models
 * FACT_PROMOS - This mart model is built to show what promos (incl discount amounts) have been given to certain orders and products. I didnt aggregate this yet, but joined the data in such a way that you can identify which promos were given (not possible from source table cause product_id and order_id are not linked) and which gives the flexibility to analyse promos on both order and product level. 
 * FACT_PRODUCT - This mart model is built to show daily stats per product. For example the daily page views, daily total orders and conversion rate of page views into orders. I added this on product level so the product team can analyse the performance per product.
@@ -50,7 +51,8 @@ Product mart models
 ### Part 2. Tests
 
 **We added some more models and transformed some data! Now we need to make sure they’re accurately reflecting the data. Add dbt tests into your dbt project on your existing models from Week 1, and new models from the section above**
-I've added the following generic tests to some of the columns in either staging or mart models. I used unique and not nulll tests on the primary key columns (so the id columns) because these values should be unique. Also these should not be null since these id columsn are used to join to other tables. In the mart models, I also added positive valuesf for values that should not be negative, like for example the total_orders or total_page_views columns.
+
+I've added some generic tests to some of the columns both in staging or mart models. I used unique and not nulll tests on the primary key columns (so the id columns) because these values should be unique. Also these should not be null since these id columns are used to join to other tables. In the mart models, I also added positive values test for values that should not be negative, like for example the total_orders or total_page_views columns.
 
 **Your stakeholders at Greenery want to understand the state of the data each day. Explain how you would ensure these tests are passing regularly and how you would alert stakeholders about bad data getting through.**
 
