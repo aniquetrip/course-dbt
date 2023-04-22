@@ -46,12 +46,8 @@ Product mart models
 
 Part 2. Tests
 ## We added some more models and transformed some data! Now we need to make sure they’re accurately reflecting the data. Add dbt tests into your dbt project on your existing models from Week 1, and new models from the section above
-I've added the following tests to some of the columns in either staging or mart models. Also positive values tests for some number columns.
-Staging models
-* uniqueness
-* not null
+I've added the following generic tests to some of the columns in either staging or mart models. I used unique and not nulll tests on the primary key columns (so the id columns) because these values should be unique. Also these should not be null since these id columsn are used to join to other tables. In the mart models, I also added positive valuesf for values that should not be negative, like for example the total_orders or total_page_views columns.
 
-Marts models
-* uniqueness
-* not null
-* positive_values
+
+Part 3. Snapshots
+## Which products had their inventory change from week 1 to week 2? 

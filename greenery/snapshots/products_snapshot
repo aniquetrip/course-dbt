@@ -10,7 +10,6 @@
    )
 }}
 
-SELECT *
-FROM {{ source('postgres', 'products') }}
+SELECT * FROM {{ ref('stg_products') }}
 
  {% endsnapshot %}
