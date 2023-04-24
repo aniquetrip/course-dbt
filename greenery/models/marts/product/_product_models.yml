@@ -11,13 +11,13 @@ models:
           - unique 
       - name: total_page_views
         tests:
-          - postive_values
+          - positive_values
       - name: total_add_to_carts
         tests:
-          - postive_values
+          - positive_values
       - name: total_orders
         tests:
-          - postive_values
+          - positive_values
 
   - name: fact_promos
     description: 'Mart showing which promos were given for different orders and products'

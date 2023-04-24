@@ -12,8 +12,10 @@ WITH events AS (
 SELECT 
  product_id
 , DATE(created_at) AS created_day
-, SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END) AS total_page_views
-, SUM(CASE WHEN event_type = 'add_to_cart' THEN 1 ELSE 0 END) AS total_add_to_carts
+,{{ agg_event_types('checkout') }}
+,{{ agg_event_types('package_shipped') }}
+,{{ agg_event_types('page_view') }}
+,{{ agg_event_types('add_to_cart') }}
 FROM events
 GROUP BY 1,2
 

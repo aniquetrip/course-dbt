@@ -1,0 +1,7 @@
+version: 2
+
+macros:
+
+  - name: agg_event_types
+    description: 'Macro which aggregates different event types per session'
+
