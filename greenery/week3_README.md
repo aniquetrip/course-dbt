@@ -61,11 +61,67 @@ ORDER BY conversion_rate DESC
 ### Part 2. 
 
 **Create a macro to simplify part of a model(s).**
+I created a macro that aggregates event types per product. 
 
-xxxx
+Macro:
+```
+{% macro agg_event_types() %} 
+
+ {% set event_types = dbt_utils.get_column_values(
+    table=ref('stg_events')
+    , column='event_type'
+ ) %}
+
+  {% for event_type in event_types  %}
+      ,SUM(CASE WHEN event_type = '{{ event_type }}' THEN 1 ELSE 0 END)  AS total_{{ event_type }}s
+  {% endfor %}
+
+{% endmacro %} 
+
+```
+
+Then I used this macro in one of the CTEs in my intermediate model int_event_types_products.sql:
+```
+SELECT
+    product_id
+    , DATE(created_at) AS created_day
+    {{ agg_event_types() }}
+FROM events
+GROUP BY 1,2
+```
+
+To better understand what the macro does, this is the compiled code as a result of the macro:
+```
+SELECT
+    product_id
+    , DATE(created_at) AS created_day
+    ,SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END)  AS total_page_views
+
+    ,SUM(CASE WHEN event_type = 'add_to_cart' THEN 1 ELSE 0 END)  AS total_add_to_carts
+  
+    ,SUM(CASE WHEN event_type = 'checkout' THEN 1 ELSE 0 END)  AS total_checkouts
+  
+    ,SUM(CASE WHEN event_type = 'package_shipped' THEN 1 ELSE 0 END)  AS total_package_shippeds
+  
+FROM events
+GROUP BY 1,2
+```
+
 
 ### Part 3.
 **Add a post hook to your project to apply grants to the role “reporting”.**
+I first created the reporting role. Then I added the post hook in the dbt_project.yml file and viewed the results in the query history from Activity in Snowflake, which showed it run successfully.
+
+See here the code which I've added in the dbt_project.yml file
+```
+  post-hook:
+    - "GRANT SELECT ON {{ this }} TO reporting"
+
+on-run-end:
+    - "GRANT USAGE ON SCHEMA {{ schema }} TO reporting"
+```
+
+
 
 xxx
 

@@ -10,8 +10,8 @@ WITH orders_products AS (
     SELECT * FROM {{ ref('int_orders_products') }}
 )
 
-, page_views_products AS (
-   SELECT * FROM {{ ref('int_page_views_products') }}
+, event_types_products AS (
+   SELECT * FROM {{ ref('int_event_types_products') }}
 )
 
 , products AS (
@@ -19,15 +19,15 @@ WITH orders_products AS (
 )
 
 SELECT 
-page_views_products.product_id
+event_types_products.product_id
 , products.name
-, page_views_products.created_day
-, page_views_products.total_page_views
-, page_views_products.total_add_to_carts
+, event_types_products.created_day
+, event_types_products.total_page_views
+, event_types_products.total_add_to_carts
 , orders_products.total_orders
 , ROUND((total_orders) / (total_page_views),2) AS conversion_rate -- conversion rate of page views into orders
-FROM page_views_products
+FROM event_types_products
 LEFT JOIN orders_products 
-    ON page_views_products.product_id = orders_products.product_id AND page_views_products.created_day = orders_products.created_day
+    ON event_types_products.product_id = orders_products.product_id AND event_types_products.created_day = orders_products.created_day
 LEFT JOIN products
     ON orders_products.product_id = products.product_id
