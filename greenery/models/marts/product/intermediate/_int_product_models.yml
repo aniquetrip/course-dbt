@@ -2,10 +2,9 @@ version: 2
 
 models:
 
-  - name: int_orders_products
+  - name: int_products_event_types
 
-  - name: int_page_views_products
+  - name: int_products_orders
 
-  - name: int_events_products_orders
 
     

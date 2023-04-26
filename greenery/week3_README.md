@@ -7,8 +7,18 @@
 = 62.5% (0.624567)
 
 ```
-SELECT COUNT(DISTINCT order_id) / COUNT(DISTINCT session_id) AS conversion_rate
-FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_EVENTS AS events
+{{ 
+    config(
+        materialized='table'
+) 
+}}
+
+WITH products_orders AS (
+   SELECT * FROM {{ ref('int_products_orders') }}
+)
+
+SELECT COUNT(DISTINCT order_id) / COUNT(DISTINCT session_id) AS conversion_rate -- conversion rate of page views into orders
+FROM products_orders
 
 ```
 **What is our conversion rate by product?**
@@ -16,34 +26,38 @@ FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_EVENTS AS events
 =  # of unique sessions with a purchase event of that product / total number of unique sessions that viewed that product
 
 ```
-WITH orders AS (
-SELECT 
-   order_items.product_id
-    , COUNT(DISTINCT order_items.order_id) as total_orders
-FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_EVENTS AS events
-LEFT JOIN DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_ORDER_ITEMS AS order_items
-    ON events.order_id = order_items.order_id
-GROUP BY 1
+WITH products_orders AS (
+    SELECT * FROM {{ ref('int_products_orders') }}
 )
 
-, page_views AS (
-SELECT 
- product_id
-, SUM(CASE WHEN event_type = 'page_view' THEN 1 ELSE 0 END) AS total_page_views
-FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_EVENTS AS events
-GROUP BY 1
+, products_event_types AS (
+   SELECT * FROM {{ ref('int_products_event_types') }}
+)
+
+, products AS (
+   SELECT * FROM {{ ref('stg_products') }}
+)
+
+, orders_per_product AS (
+   SELECT 
+     product_id
+     , COUNT(DISTINCT order_id) AS total_orders
+   FROM int_products_orders
+   GROUP BY 1 --, 2
 )
 
 SELECT 
-    page_views.product_id
+    products_event_types.product_id
     , products.name
-    , ROUND((total_orders) / (total_page_views),2) AS conversion_rate 
-FROM page_views
-LEFT JOIN orders 
-    ON page_views.product_id = orders.product_id 
-LEFT JOIN DEV_DB.DBT_ANIQUETRIPMOLLIECOM.STG_PRODUCTS AS products
-    ON page_views.product_id = products.product_id
-WHERE page_views.product_id IS NOT NULL
+    , products_event_types.total_page_views
+    , products_event_types.total_add_to_carts
+    , orders_per_product.total_orders
+    , ROUND((total_orders) / (total_page_views),2) AS conversion_rate -- conversion rate of page views into orders
+FROM products_event_types
+LEFT JOIN orders_per_product 
+    ON products_event_types.product_id = orders_per_product.product_id --AND products_event_types.created_day = orders_products.created_day
+LEFT JOIN products
+    ON orders_per_product.product_id = products.product_id
 ORDER BY conversion_rate DESC
 ```
 

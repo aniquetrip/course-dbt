@@ -6,28 +6,38 @@
 ) 
 }}
 
-WITH orders_products AS (
-    SELECT * FROM {{ ref('int_orders_products') }}
+WITH products_orders AS (
+    SELECT * FROM {{ ref('int_products_orders') }}
 )
 
-, event_types_products AS (
-   SELECT * FROM {{ ref('int_event_types_products') }}
+, products_event_types AS (
+   SELECT * FROM {{ ref('int_products_event_types') }}
 )
 
 , products AS (
    SELECT * FROM {{ ref('stg_products') }}
 )
 
+, orders_per_product AS (
+   SELECT 
+     product_id
+     , DATE(created_at) AS created_day
+     , COUNT(DISTINCT order_id) AS total_orders
+   FROM int_products_orders
+   WHERE  event_type = 'checkout' -- this is necessary to select distinct orders per day and avoid double counting of orders
+   GROUP BY 1 , 2
+)
+
 SELECT 
-event_types_products.product_id
-, products.name
-, event_types_products.created_day
-, event_types_products.total_page_views
-, event_types_products.total_add_to_carts
-, orders_products.total_orders
-, ROUND((total_orders) / (total_page_views),2) AS conversion_rate -- conversion rate of page views into orders
-FROM event_types_products
-LEFT JOIN orders_products 
-    ON event_types_products.product_id = orders_products.product_id AND event_types_products.created_day = orders_products.created_day
+    products_event_types.product_id
+    , products.name
+    , products_event_types.created_day
+    , products_event_types.total_page_views
+    , products_event_types.total_add_to_carts
+    , orders_per_product.total_orders
+    , ROUND((total_orders) / (total_page_views),2) AS conversion_rate -- conversion rate of page views into orders
+FROM products_event_types
+LEFT JOIN orders_per_product 
+    ON products_event_types.product_id = orders_per_product.product_id AND products_event_types.created_day = orders_per_product.created_day
 LEFT JOIN products
-    ON orders_products.product_id = products.product_id
+    ON orders_per_product.product_id = products.product_id
