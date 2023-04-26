@@ -43,7 +43,7 @@ WITH products_orders AS (
      product_id
      , COUNT(DISTINCT order_id) AS total_orders
    FROM int_products_orders
-   GROUP BY 1 --, 2
+   GROUP BY 1
 )
 
 SELECT 
