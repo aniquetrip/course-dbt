@@ -2,7 +2,7 @@ version: 2
 
 models:
 
-  - name: fact_products
+  - name: fact_products_daily
     description: 'Mart with statistics like page views, orders and conversion rate per product'
     columns:
       - name: product_id

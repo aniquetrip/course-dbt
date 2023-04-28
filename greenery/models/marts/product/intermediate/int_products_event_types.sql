@@ -14,4 +14,4 @@ SELECT
     , DATE(created_at) AS created_day
      {{ agg_event_types() }}
 FROM products_orders
-GROUP BY 1, 2
+GROUP BY 1,2

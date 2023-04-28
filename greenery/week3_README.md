@@ -7,18 +7,11 @@
 = 62.5% (0.624567)
 
 ```
-{{ 
-    config(
-        materialized='table'
-) 
-}}
-
-WITH products_orders AS (
-   SELECT * FROM {{ ref('int_products_orders') }}
-)
-
-SELECT COUNT(DISTINCT order_id) / COUNT(DISTINCT session_id) AS conversion_rate -- conversion rate of page views into orders
-FROM products_orders
+SELECT
+    COUNT(DISTINCT CASE WHEN TOTAL_CHECKOUTS > 0 THEN session_id END) AS count_checkouts
+    , COUNT(DISTINCT session_id) AS count_sessions
+    , count_checkouts/count_sessions AS conversion_rate
+FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.FACT_SESSIONS
 
 ```
 **What is our conversion rate by product?**
@@ -26,6 +19,12 @@ FROM products_orders
 =  # of unique sessions with a purchase event of that product / total number of unique sessions that viewed that product
 
 ```
+{{ 
+    config(
+        materialized='table'
+) 
+}}
+
 WITH products_orders AS (
     SELECT * FROM {{ ref('int_products_orders') }}
 )
@@ -43,7 +42,7 @@ WITH products_orders AS (
      product_id
      , COUNT(DISTINCT order_id) AS total_orders
    FROM int_products_orders
-   GROUP BY 1
+   GROUP BY 1 
 )
 
 SELECT 
@@ -55,7 +54,7 @@ SELECT
     , ROUND((total_orders) / (total_page_views),2) AS conversion_rate -- conversion rate of page views into orders
 FROM products_event_types
 LEFT JOIN orders_per_product 
-    ON products_event_types.product_id = orders_per_product.product_id --AND products_event_types.created_day = orders_products.created_day
+    ON products_event_types.product_id = orders_per_product.product_id 
 LEFT JOIN products
     ON orders_per_product.product_id = products.product_id
 ORDER BY conversion_rate DESC
@@ -67,11 +66,17 @@ ORDER BY conversion_rate DESC
 |Cactus|  0.55
 |Arrow Head| 0.55
 |Bamboo| 0.52
-|ZZ Plant| 
-|Monstera| 
-|Calathea Makoyana| 
-|Rubber Plant| 
-|Devil's Ivy| 
+|ZZ Plant| 0.52
+|Monstera| 0.51
+|Calathea Makoyana| 0.51 
+|Rubber Plant| 0.50
+|Devil's Ivy| 0.49
+|Aloe Vera|0.49
+|Jade Plant|0.49
+|Majesty Palm|0.48
+|Philodendron|0.48
+|..|..
+|Pothos|0.33
 
 
 ### Part 2. 
@@ -159,4 +164,9 @@ Instead of creating a separate intermediate model for each event type, with this
 
 ### Part 6.
 **Which products had their inventory change from week 1 to week 2?**
-* 
+* Bamboo - decreased from 56 to 44
+* Monstera - descreased from 64 to 50
+* Philodendron - decreased from 25 to 15
+* Pothos  - decreased from 20 to 0
+* String of Pearls - decreased from 10 to 0
+* ZZ Plant - decreased from 89 to 53
