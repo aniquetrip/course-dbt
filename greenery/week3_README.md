@@ -62,7 +62,7 @@ ORDER BY conversion_rate DESC
 
 | PRODUCT_NAME | CONVERSION_RATE
 | --- | ---|
-|String of pearls| 0.6
+|String of pearls| 0.60
 |Cactus|  0.55
 |Arrow Head| 0.55
 |Bamboo| 0.52
