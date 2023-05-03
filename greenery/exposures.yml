@@ -1,0 +1,13 @@
+version: 2
+
+exposures:  
+  - name: product_funnel_dashboard
+    description: >
+      This dashboard is critical and is dependent on the product funnel mart model. We therefore want to know if this model run successfully or not.
+    type: dashboard
+    maturity: high
+    owner:
+      name: Anique Trip
+      email: anique.trip@mollie.com
+    depends_on:
+      - ref('fact_sessions_funnel')
