@@ -80,9 +80,10 @@ exposures:
 
 
 ### Part 3: Reflection questions
-**3A. dbt next steps for you .**
+**3A. What are 1-2 things you might do differently / recommend to your organization based on learning from this course?.**
 
-xxxx
+* Testing - say we make changes to a dbt model, we test this locally before we push changes to production. When we test this locally we basically run all the data in that model, which means a lot of data is processed. I think we could improve this by running this not on all historical data in that model, but perhaps look at a smaller set of data to test the changes on.
+* Snapshots - 
 
 **3B. Setting up for production / scheduled dbt run of your project .**
 
