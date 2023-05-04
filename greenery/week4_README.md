@@ -75,7 +75,8 @@ exposures:
     depends_on:
       - ref('fact_sessions_funnel')
 ```
-![alt text](https://8080-aniquetrip-coursedbt-fejbdbpc4r7.ws-eu96b.gitpod.io/#!/overview/Dashboard?g_v=1)
+
+![dbt-dag exposure - week 4](https://user-images.githubusercontent.com/130590347/236140622-33bf3f23-3c2d-48c3-8c19-d43bc922fedc.png)
 
 
 ### Part 3: Reflection questions
