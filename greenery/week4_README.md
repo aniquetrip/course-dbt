@@ -15,6 +15,7 @@
 
 
 **Did we have any items go out of stock in the last 3 weeks?**
+
 String of Pearls and Pothos went out of stock in week 3. However in week 4 these items got back in stock again.
 ```
 WITH inventory AS (  
@@ -56,6 +57,7 @@ FROM DEV_DB.DBT_ANIQUETRIPMOLLIECOM.FACT_SESSIONS_FUNNEL
 ```
 
 **Use an exposure on your product analytics model to represent that this is being used in downstream BI tools.**
+
 The exposure that I've added in the exposures.yml file can be found below.
 
 ```
