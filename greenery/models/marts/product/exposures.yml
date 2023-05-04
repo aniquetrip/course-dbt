@@ -11,4 +11,3 @@ exposures:
       email: anique.trip@mollie.com
     depends_on:
       - ref('fact_sessions_funnel')
-       - ref('fact_sessions_funnel')
