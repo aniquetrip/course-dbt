@@ -3,16 +3,16 @@
 ### Part 1. dbt Snapshots
 **Which products had their inventory change from week 3 to week 4?**
 
-* Bamboo
-* Monstera 
-* Philodendron 
-* String of pearls
-* Pothos
-* ZZ Plant
+* Bamboo - reduced from 44 to 23
+* Monstera - reduced from 50 to 31
+* Philodendron - increased from 15 to 30
+* String of pearls - increased from 0 to 10
+* Pothos - increased from 0 to 20
+* ZZ Plant - decreased from 53 to 41
 
 
 **Which products had the most fluctuations in inventory?**
-
+Monstera, Philodendron, Pothos, String of Pearls
 
 **Did we have any items go out of stock in the last 3 weeks?**
 
@@ -75,6 +75,7 @@ exposures:
     depends_on:
       - ref('fact_sessions_funnel')
 ```
+Here you can find an overview of the adjusted DAG, with the exposure and its dependency added.
 
 ![dbt-dag exposure - week 4](https://user-images.githubusercontent.com/130590347/236140622-33bf3f23-3c2d-48c3-8c19-d43bc922fedc.png)
 
