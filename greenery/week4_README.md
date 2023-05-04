@@ -84,7 +84,10 @@ exposures:
 **3A. What are 1-2 things you might do differently / recommend to your organization based on learning from this course?.**
 
 * Testing - say we make changes to a dbt model, we test this locally before we push changes to production. When we test this locally we basically run all the data in that model, which means a lot of data is processed. I think we could improve this by running this not on all historical data in that model, but perhaps look at a smaller set of data to test the changes on.
-* Snapshots - 
+* Snapshots - we currently don't make use of snapshots, but I think there will be use cases at our company where we could apply it and benefit from this useful feature.
 
-**3B. Setting up for production / scheduled dbt run of your project .**
+**3B. How would you go about setting up a production/scheduled dbt run of your project in an ideal state?**
 
+I would schedule my production run every morning on a daily schedule (say new/fresh data is ingested every morning), after the ingestion of all the data is completed. To schedule this I would use Airflow, so that we can set this up automatically on a recurring time every day, early enough to make sure the entire dbt run is completed so that all data is refreshed in our BI tool at the latest by 9am. In this way, dashboard users can start their day with fresh data. In this schedule I would run all dbt models and tests, and setup alerts in a dedicated "data-alerts" slack channel, for whenever any test fails. In this way, our team gets notified when there is any issue with the data, so we can act upon it straight away. 
+
+In the ideal state I would connect our critical dashboards (in our BI tool Looker), to the upstream dbt model dependencies, so that we can also setup alerts to notify stakeholders of these critical dashboards whenever the data is not up-to-date/accurate. I'm not sure how I would setup these dependencies though, as we have many critical dashboards (>50), so creating and updating this manually 1:1 in an exposure does not seem feasible to me. So if anyone would have any suggestion for this (without having to pay for another tool ;), that would be very useful.  
