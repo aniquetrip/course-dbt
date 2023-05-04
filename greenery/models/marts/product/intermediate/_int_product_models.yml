@@ -6,5 +6,7 @@ models:
 
   - name: int_products_orders
 
+  - name: int_sessions_event_types
+
 
     
