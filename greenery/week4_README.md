@@ -75,7 +75,7 @@ exposures:
     depends_on:
       - ref('fact_sessions_funnel')
 ```
-![alt text](https://8080-aniquetrip-coursedbt-fejbdbpc4r7.ws-eu96b.gitpod.io/#!/overview/Dashboard?g_v=1)
+
 
 
 ### Part 3: Reflection questions
